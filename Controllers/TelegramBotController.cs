@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Telegram.Bot.Types;
+using ValiBot.Commands.BotServices;
 using ValiBot.Services;
+using ValiBot.Services.Interfaces;
 
 namespace ValiBot.Controllers
 {
@@ -12,33 +14,23 @@ namespace ValiBot.Controllers
     public class TelegramBotController : ControllerBase
     {
         private readonly ICommandExecutor _commandExecutor;
+        private readonly IFillFormService _fillFormService;
 
-        public TelegramBotController(ICommandExecutor commandExecutor)
+
+        public TelegramBotController(ICommandExecutor commandExecutor, IFillFormService fillFormService)
         {
             _commandExecutor = commandExecutor;
+            _fillFormService = fillFormService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Update([FromBody]Update upd)
         {
-            // /start => register user
+            Console.WriteLine("");
 
             if (upd?.Message?.Chat == null && upd?.CallbackQuery == null)
             {
                 return Ok();
-            }
-
-            if (upd.CallbackQuery != null)
-            {
-                try
-                {
-                    await _commandExecutor.Execute(upd);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
             }
 
             try
@@ -52,5 +44,7 @@ namespace ValiBot.Controllers
             
             return Ok();
         }
+        
+       
     }
 }

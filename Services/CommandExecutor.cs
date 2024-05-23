@@ -7,6 +7,9 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using ValiBot.Commands;
+using ValiBot.Entities;
+using ValiBot.Repository.Interfaces;
+using ValiBot.Services.Interfaces;
 
 namespace ValiBot.Services
 {
@@ -14,14 +17,30 @@ namespace ValiBot.Services
     {
         private readonly List<BaseCommand> _commands;
         private BaseCommand _lastCommand;
-
-        public CommandExecutor(IServiceProvider serviceProvider)
+        private readonly IFillFormService _fillFormService;
+        private readonly IBaseRepository<AppUser> _userRepository;
+        
+        public CommandExecutor(IServiceProvider serviceProvider, IFillFormService fillFormService, IBaseRepository<AppUser> userRepository)
         {
+            _fillFormService = fillFormService;
+            _userRepository = userRepository;
             _commands = serviceProvider.GetServices<BaseCommand>().ToList();
         }
         
         public async Task Execute(Update update)
         {
+            var currentUser = _userRepository.GetAll().FirstOrDefault(x => x.ChatId == update.Message.Chat.Id);
+
+            //TODO
+            if (currentUser == null)
+            {
+                return;
+            }
+            
+            var questionIndex = currentUser.QuestionIndex;
+
+            var lastCommand = currentUser.LastCommand;
+            
             if(update?.Message?.Chat == null && update?.CallbackQuery == null)
                 return;
 
@@ -49,15 +68,15 @@ namespace ValiBot.Services
                     return;
                 }
             }
-            
 
-            // AddOperation => SelectCategory => FinishOperation
-            // 
-            switch (_lastCommand?.Name)
+            
+            
+            switch (lastCommand)
             {
-                case CommandNames.AddOperationCommand:
+                case CommandNames.FillFormCommand:
                 {
-                    await ExecuteCommand(CommandNames.SelectCategoryCommand, update);
+                    questionIndex++;
+                    await _fillFormService.FillForm(update, CancelKeyboard(), questionIndex);
                     break;
                 }
                 case CommandNames.SelectCategoryCommand:
@@ -72,19 +91,22 @@ namespace ValiBot.Services
                 }
             }
         }
-
+        
         private async Task ExecuteCommand(string commandName, Update update)
         {
             _lastCommand = _commands.First(x => x.Name == commandName);
             
-            var startOverButton = InlineKeyboardButton.WithCallbackData("Вернуться в меню", "/start");
+            await _lastCommand.ExecuteAsync(update, CancelKeyboard());
+        }
 
-            var keyboard = new InlineKeyboardMarkup(new[]
+        private static InlineKeyboardMarkup CancelKeyboard()
+        {
+            var startOverButton = InlineKeyboardButton.WithCallbackData("Чтобы вернуться в меню, нажми кнопку ниже", "/start");
+
+            return new InlineKeyboardMarkup(new[]
             {
                 new[] { startOverButton }
             });
-            
-            await _lastCommand.ExecuteAsync(update, keyboard);
         }
     }
 }

@@ -8,7 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ValiBot.Commands;
 using ValiBot.Commands.BotServices;
+using ValiBot.Entities;
+using ValiBot.Repository;
+using ValiBot.Repository.Interfaces;
 using ValiBot.Services;
+using ValiBot.Services.Interfaces;
 
 namespace ValiBot
 {
@@ -30,13 +34,16 @@ namespace ValiBot
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ValiBot API", Version = "v1" });
             });
-            services.AddSingleton<TelegramBot>();
-            services.AddSingleton<ICommandExecutor, CommandExecutor>();
-            services.AddSingleton<IOperationService, OperationService>();
-            services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<IAnalyticService, AnalyticService>();
-            services.AddSingleton<BaseCommand, StartCommand>();
-            services.AddSingleton<BaseCommand, FillFormCommand>();
+            
+            services.AddScoped<TelegramBot>();
+            services.AddScoped<ICommandExecutor, CommandExecutor>();
+            services.AddScoped<IOperationService, OperationService>();
+            services.AddScoped<IFillFormService, FillFormService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAnalyticService, AnalyticService>();
+            services.AddScoped<BaseCommand, StartCommand>();
+            services.AddScoped<BaseCommand, FillFormCommand>();
+            services.AddScoped<IBaseRepository<AppUser>, BaseRepository<AppUser>>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

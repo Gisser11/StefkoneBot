@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ValiBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2174794eebc91f78434a83c0e4f210a3b97c17f")]
 [assembly: System.Reflection.AssemblyProductAttribute("ValiBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ValiBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

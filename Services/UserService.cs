@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using ValiBot.Entities;
+using ValiBot.Services.Interfaces;
 
 namespace ValiBot.Services
 {

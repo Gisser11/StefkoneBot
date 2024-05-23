@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using ValiBot.Entities;
+using ValiBot.Services.Interfaces;
 
 namespace ValiBot.Services
 {

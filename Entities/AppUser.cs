@@ -8,8 +8,11 @@ namespace ValiBot.Entities
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        
-        public ICollection<RegisterForm> RegisterForms { get; set; }
 
+        public string LastCommand { get; set; }
+        
+        public int QuestionIndex { get; set; }
+
+        public ICollection<RegisterForm> RegisterForms { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ValiBot.Entities;
 
-namespace ValiBot.Services
+namespace ValiBot.Services.Interfaces
 {
     public interface IOperationService
     {

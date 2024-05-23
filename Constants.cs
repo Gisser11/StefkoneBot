@@ -6,6 +6,5 @@
         
         public const string Question2 = "Текущий обрабатываемый объем денег";
         
-        
     }
 }

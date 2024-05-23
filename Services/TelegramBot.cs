@@ -24,6 +24,7 @@ namespace ValiBot.Services
             _botClient = new TelegramBotClient(_configuration["Token"]);
 
             var hook = $"{_configuration["Url"]}api/message/update";
+            
             await _botClient.SetWebhookAsync(hook);
 
             return _botClient;

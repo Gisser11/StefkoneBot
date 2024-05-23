@@ -68,3 +68,4 @@ C:\Users\artem\OneDrive\Рабочий стол\ValiBot-master\ValiBot\obj\Debug
 C:\Users\artem\OneDrive\Рабочий стол\ValiBot-master\ValiBot\obj\Debug\net5.0\ref\ValiBot.dll
 C:\Users\artem\OneDrive\Рабочий стол\ValiBot-master\ValiBot\bin\Debug\net5.0\Npgsql.dll
 C:\Users\artem\OneDrive\Рабочий стол\ValiBot-master\ValiBot\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\artem\OneDrive\Рабочий стол\ValiBot-master\ValiBot\obj\Debug\net5.0\ValiBot.sourcelink.json

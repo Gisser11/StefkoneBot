@@ -4,6 +4,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using ValiBot.Services;
+using ValiBot.Services.Interfaces;
 
 namespace ValiBot.Commands
 {
@@ -23,6 +24,7 @@ namespace ValiBot.Commands
         public override async Task ExecuteAsync(Update update, InlineKeyboardMarkup inlineKeyboardMarkup)
         {
             var user = await _userService.GetOrCreate(update);
+            
             var inlineKeyboard = new ReplyKeyboardMarkup(new[]
             {
                 new[]
@@ -42,7 +44,7 @@ namespace ValiBot.Commands
                 }
             }, 
                 resizeKeyboard: true);
-
+            
             await _botClient.SendTextMessageAsync(user.ChatId, "Привет! Я помогу тебе разобраться в процессинге. ", 
                 ParseMode.Markdown, replyMarkup:inlineKeyboard);
         }

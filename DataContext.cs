@@ -7,9 +7,7 @@ namespace ValiBot
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            Database.EnsureDeleted();
             Database.EnsureCreated();
-            
         }
         
         public DbSet<AppUser> Users { get; set; }
